@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>>Battery Info</title>
+<style>
+html,body{
+height: 100%;
+width: 100%;
+}
+.backgroundLayer{
+background-color:DarkMagenta;
+height: 100%;
+width: 100%;
+}
+.hostLayer{
+}
+.appLayer{
+}
+</style>
+    <!-- Netlify Identity Widget -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- Github -->
+    <script type="text/javascript" src="myfunctions/github.js"></script>
+</head>
+<body>
+<div class="backgroundLayer">
+<div class="hostLayer">
+<div class="appLayer">
+<textarea id="my-textarea" placeholder="your text..." rows="10" cols="80" ></textarea>
+<br>
+<button type="button" onclick="download()">Save</button>
+
+<button type="button" id="getdata" onclick="getfromgit()">GetToGithub</button>
+<button type="button" onclick="savetogoogle()">SaveToGoogle</button>
+<script>
+function download(){
+    var text = document.getElementById("my-textarea").value;
+    text = text.replace(/\n/g, "\r\n"); // To retain the Line breaks.
+    var blob = new Blob([text], { type: "text/plain"});
+    var anchor = document.createElement("a");
+    anchor.download = "my-filename.txt";
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.target ="_blank";
+    anchor.style.display = "none"; // just to be safe!
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+ }
+ function savetogoogle(){
+ //https://script.google.com/macros/s/AKfycbxkYnKLaEkAAohJaQag6Qv29InGXqi01WqhwNV6YX4D2iR9pTWerjOfvF7eGLSuLZQ/exec
+
+  let gs_url = "https://script.google.com/macros/s/AKfycbxkYnKLaEkAAohJaQag6Qv29InGXqi01WqhwNV6YX4D2iR9pTWerjOfvF7eGLSuLZQ/exec";
+  postReq(gs_url, catchserver, request = null);
+
+
+ }
+ function catchserver(response){
+   alert(response);
+ }
+ 
+ 
+ function postReq(url, catchserver, request = null) {
+        // Sample request body?
+    var request = {
+     /*"majorDimension": "ROWS",
+     "values": [
+      [
+       "15:41 02/08/2019",
+       "Steven",
+       "20",
+       "Male",
+       "test@mail.com",
+       "FooBar"
+      ]
+     ]*/
+		 "Name" : "name1",
+		 "E-mail": "abc@dummy.com",
+		 "Mobile": "9009009001",
+		 "Country": "India",
+		 "Query": "testing"
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Added
+    xhr.onload = function (e) {
+        if (e) console.log(e);
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                catchserver(xhr.responseText.toString());
+            } else {
+                catchserver(null);
+                console.log(xhr.status);
+            }
+        } else {
+            console.log(xhr.status);
+        };
+    };
+    xhr.send(JSON.stringify(request)); // Modified
+}
+
+ function getfromgit(){
+  netlifyIdentity.open();
+	netlifyIdentity.on('getdata', function(user) {
+	getData('README.md').then(function(result) {
+
+                console.log(result);
+
+                let data = result.content;
+
+
+                document.querySelector('#my-textarea').innerHTML = data;
+            });
+
+            // save data example
+            /*
+            saveData('newfile.txt', 'Some data').then(function(result){
+                console.log(result);
+            });
+            */
+
+        });
+ }
+</script>
+</div></div></div>
+</body>
+</html>
