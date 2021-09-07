@@ -1,12 +1,37 @@
 <html>
 <head>
 <title>>Battery Info</title>
+<style>
+html,body{
+height: 100%;
+width: 100%;
+}
+.backgroundLayer{
+background-color:DarkMagenta;
+height: 100%;
+width: 100%;
+}
+.hostLayer{
+}
+.appLayer{
+}
+</style>
+    <!-- Netlify Identity Widget -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- Github -->
+    <script type="text/javascript" src="myfunctions/github.js"></script>
 </head>
 <body>
+<div class="backgroundLayer">
+<div class="hostLayer">
+<div class="appLayer">
 <textarea id="my-textarea" placeholder="your text..." rows="10" cols="80" ></textarea>
 <br>
 <button type="button" onclick="download()">Save</button>
 
+<button type="button" id="getdata" onclick="getfromgit()">GetToGithub</button>
+<button type="button" onclick="savetogit()">SaveToGithub</button>
 <script>
 function download(){
     var text = document.getElementById("my-textarea").value;
@@ -20,7 +45,33 @@ function download(){
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+ 
+ function savetogit(){
+ 
+ }
+ function getfromgit(){
+  netlifyIdentity.open();
+	netlifyIdentity.on('getdata', function(user) {
+	getData('README.md').then(function(result) {
+
+                console.log(result);
+
+                let data = result.content;
+
+
+                document.querySelector('#my-textarea').innerHTML = data;
+            })
+
+            // save data example
+            /*
+            saveData('newfile.txt', 'Some data').then(function(result){
+                console.log(result);
+            });
+            */
+
+        })
  }
 </script>
+</div></div></div>
 </body>
 </html>
