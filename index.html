@@ -59,7 +59,7 @@ function download(){
  
  
  function postReq(url, catchserver, request = null) {
-    const accessToken = "###"; // <--- Please set your access token here.
+    const accessToken = "1MDAze8_9KzslR37exupnApeE_-6u3fqeDf0chD49OQbWEVgoXXaAjTuq"; // <--- Please set your access token here.
 
     // Sample request body?
     var request = {
@@ -83,7 +83,7 @@ function download(){
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
-    //xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // Added
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // Added
     xhr.setRequestHeader('Content-Type', 'application/json'); // Added
     xhr.onload = function (e) {
         if (e) console.log(e);
