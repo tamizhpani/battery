@@ -31,7 +31,7 @@ width: 100%;
 <button type="button" onclick="download()">Save</button>
 
 <button type="button" id="getdata" onclick="getfromgit()">GetToGithub</button>
-<button type="button" onclick="savetogit()">SaveToGithub</button>
+<button type="button" onclick="savetogoogle()">SaveToGoogle</button>
 <script>
 function download(){
     var text = document.getElementById("my-textarea").value;
@@ -47,10 +47,61 @@ function download(){
     document.body.removeChild(anchor);
  }
  function savetogit(){
-             saveData('newfile.txt', 'Some data').then(function(result){
-                console.log(result);
-            });
+//https://script.google.com/macros/s/AKfycbwLBQ4oa7C4WjSmbjmzn4kdbkfAO11ZoZbaOBy1zeXdHyCjns_ObWa3jUSNJE8Ysxdy/exec
+	let gs_url = "https://script.google.com/macros/s/AKfycbwLBQ4oa7C4WjSmbjmzn4kdbkfAO11ZoZbaOBy1zeXdHyCjns_ObWa3jUSNJE8Ysxdy/exec";
+  postReq(gs_url, callback, request = null);
+
+
  }
+ function catchserver(response){
+   alert(response);
+ }
+ 
+ 
+ function postReq(url, catchserver, request = null) {
+    const accessToken = "###"; // <--- Please set your access token here.
+
+    // Sample request body?
+    var request = {
+     /*"majorDimension": "ROWS",
+     "values": [
+      [
+       "15:41 02/08/2019",
+       "Steven",
+       "20",
+       "Male",
+       "test@mail.com",
+       "FooBar"
+      ]
+     ]*/
+		 "Name" : "name1",
+		 "E-mail": "abc@dummy.com",
+		 "Mobile": "9009009001",
+		 "Country": "India",
+		 "Query": "testing"
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    //xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken); // Added
+    xhr.setRequestHeader('Content-Type', 'application/json'); // Added
+    xhr.onload = function (e) {
+        if (e) console.log(e);
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                callback(xhr.responseText.toString());
+            } else {
+                callback(null);
+                console.log(xhr.status);
+            }
+        } else {
+            console.log(xhr.status);
+        };
+    };
+    xhr.send(JSON.stringify(request)); // Modified
+}
+
  function getfromgit(){
   netlifyIdentity.open();
 	netlifyIdentity.on('getdata', function(user) {
