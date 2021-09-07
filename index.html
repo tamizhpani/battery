@@ -49,7 +49,7 @@ function download(){
  function savetogoogle(){
 //https://script.google.com/macros/s/AKfycbwLBQ4oa7C4WjSmbjmzn4kdbkfAO11ZoZbaOBy1zeXdHyCjns_ObWa3jUSNJE8Ysxdy/exec
 	let gs_url = "https://script.google.com/macros/s/AKfycbwLBQ4oa7C4WjSmbjmzn4kdbkfAO11ZoZbaOBy1zeXdHyCjns_ObWa3jUSNJE8Ysxdy/exec";
-  postReq(gs_url, callback, request = null);
+  postReq(gs_url, catchserver, request = null);
 
 
  }
@@ -90,9 +90,9 @@ function download(){
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
-                callback(xhr.responseText.toString());
+                catchserver(xhr.responseText.toString());
             } else {
-                callback(null);
+                catchserver(null);
                 console.log(xhr.status);
             }
         } else {
