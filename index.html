@@ -45,9 +45,11 @@ function download(){
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
- 
+ }
  function savetogit(){
- 
+             saveData('newfile.txt', 'Some data').then(function(result){
+                console.log(result);
+            });
  }
  function getfromgit(){
   netlifyIdentity.open();
@@ -60,7 +62,7 @@ function download(){
 
 
                 document.querySelector('#my-textarea').innerHTML = data;
-            })
+            });
 
             // save data example
             /*
@@ -69,7 +71,7 @@ function download(){
             });
             */
 
-        })
+        });
  }
 </script>
 </div></div></div>
